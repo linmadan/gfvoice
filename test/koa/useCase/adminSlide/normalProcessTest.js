@@ -6,15 +6,15 @@ const {
     createDBConnection
 } = require('../../../../lib/infrastructure')
 
-describe('诗歌类型管理正常流程，用例测试', () => {
+describe('Slide类型管理正常流程，用例测试', () => {
     let server
     let dBConnection
-    let poetryTypeID
+    let slideID
     before(done => {
         server = http.createServer(app.callback()).listen(3000, (err) => {
             if (err) {
                 done(err)
-            } else {
+            }else {
                 dBConnection = createDBConnection()
                 dBConnection.connect().then(() => {
                     done()
@@ -28,7 +28,7 @@ describe('诗歌类型管理正常流程，用例测试', () => {
         server.close(err => {
             if (err) {
                 done(err)
-            } else {
+            }else {
                 dBConnection.disconnect().then(() => {
                     done()
                 }).catch(err => {
@@ -37,13 +37,13 @@ describe('诗歌类型管理正常流程，用例测试', () => {
             }
         })
     })
-    describe('创建新的诗歌类型', () => {
-        it('创建一个新的诗歌类型', done => {
+    describe('创建新的Slide类型', () => {
+        it('创建一个新的Slide类型', done => {
             request(server)
-                .post("/admin/poetry-types")
+                .post("/admin/slides")
                 .send({
-                    name: "test-name-1",
-                    pic: "test-pic-1"
+                    type: 1,
+                    pic: "test-pic-1",
                 })
                 .set('Accept', 'application/json')
                 .expect(200)
@@ -56,15 +56,15 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.be.exist
-                    poetryTypeID = res.body.data.id
+                    slideID = res.body.data.id
                     done()
                 })
         })
     })
-    describe('获取指定ID的诗歌类型', () => {
-        it('返回指定ID的诗歌类型', done => {
+    describe('获取指定ID的Slide类型', () => {
+        it('返回指定ID的Slide类型', done => {
             request(server)
-                .get(`/admin/poetry-types/${poetryTypeID}`)
+                .get(`/admin/slides/${slideID}`)
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -75,18 +75,18 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.be.exist
-                    expect(res.body.data.id).to.be.equal(poetryTypeID)
+                    expect(res.body.data.id).to.be.equal(slideID)
                     done()
                 })
         })
     })
-    describe('更新诗歌类型', () => {
-        it('更新指定ID的诗歌类型', done => {
+    describe('更新Slide类型', () => {
+        it('更新指定ID的Slide类型', done => {
             request(server)
-                .put(`/admin/poetry-types/${poetryTypeID}`)
+                .put(`/admin/slides/${slideID}`)
                 .send({
-                    name: "test-name-update",
-                    pic: "test-pic-update"
+                    type: 1,
+                    pic: "test-pic-update",
                 })
                 .set('Accept', 'application/json')
                 .expect(200)
@@ -98,15 +98,14 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.id).to.be.equal(poetryTypeID)
-                    expect(res.body.data.name).to.be.equal("test-name-update")
+                    expect(res.body.data.id).to.be.equal(slideID)
                     expect(res.body.data.pic).to.be.equal("test-pic-update")
                     done()
                 })
         })
-        it('返回更新后的诗歌类型', done => {
+        it('返回更新后的Slide类型', done => {
             request(server)
-                .get(`/admin/poetry-types/${poetryTypeID}`)
+                .get(`/admin/slides/${slideID}`)
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -117,17 +116,16 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.be.exist
-                    expect(res.body.data.id).to.be.equal(poetryTypeID)
-                    expect(res.body.data.name).to.be.equal("test-name-update")
+                    expect(res.body.data.id).to.be.equal(slideID)
                     expect(res.body.data.pic).to.be.equal("test-pic-update")
                     done()
                 })
         })
     })
-    describe('获取所有诗歌类型', () => {
-        it('返回所有的诗歌类型', done => {
+    describe('获取所有Slide类型', () => {
+        it('返回所有的Slide类型', done => {
             request(server)
-                .get("/admin/poetry-types")
+                .get("/admin/slides")
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -143,10 +141,10 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                 })
         })
     })
-    describe('删除诗歌类型', () => {
-        it('删除指定ID的诗歌类型', done => {
+    describe('删除Slide类型', () => {
+        it('删除指定ID的Slide类型', done => {
             request(server)
-                .delete(`/admin/poetry-types/${poetryTypeID}`)
+                .delete(`/admin/slides/${slideID}`)
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -160,9 +158,9 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                     done()
                 })
         })
-        it('返回所有的诗歌类型', done => {
+        it('返回所有的Slide类型', done => {
             request(server)
-                .get("/admin/poetry-types")
+                .get("/admin/slides")
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {

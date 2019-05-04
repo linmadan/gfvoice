@@ -9,8 +9,7 @@ process.on('unhandledRejection', err => {
     logger.error(`unhandledRejection message: ${err.message}`)
     logger.error(`unhandledRejection stack: ${err.stack}`)
 })
-let connection = createDBConnection()
-connection.connect().then(async () => {
+createDBConnection().connect().then(async () => {
     logger.info("database is connected")
     const PORT = process.env.PORT || 3000
     http.createServer(app.callback()).listen(PORT, (err) => {
