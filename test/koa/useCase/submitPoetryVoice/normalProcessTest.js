@@ -6,7 +6,7 @@ const {
     createDBConnection
 } = require('../../../../lib/infrastructure')
 
-describe('获取诗歌列表用例测试', () => {
+describe('演唱声音提交用例测试', () => {
     let server
     let dBConnection
     let poetryID
@@ -38,7 +38,7 @@ describe('获取诗歌列表用例测试', () => {
             }
         })
     })
-    describe('获取诗歌列表', () => {
+    describe('演唱声音提交', () => {
         it('创建一个新的诗歌类型', done => {
             request(server)
                 .post("/admin/poetry-types")
@@ -82,25 +82,16 @@ describe('获取诗歌列表用例测试', () => {
                     done()
                 })
         })
-        it('返回空的诗歌列表，如果分类id不存在', done => {
+        it('提交演唱声音，返回演唱声音对象', done => {
             request(server)
-                .get(`/poetries?poetryTypeID=1`)
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(0)
-                    done()
+                .post("/poetry-voices/submit")
+                .send({
+                    av: "test-av",
+                    bgState: 1,
+                    userID: 1,
+                    poetryID: poetryID,
                 })
-        })
-        it('根据分类id,返回诗歌列表', done => {
-            request(server)
-                .get(`/poetries?poetryTypeID=${poetryTypeID}`)
+                .set('Accept', 'application/json')
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -110,39 +101,7 @@ describe('获取诗歌列表用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(1)
-                    done()
-                })
-        })
-        it('根据诗歌名称匹配,返回诗歌列表', done => {
-            request(server)
-                .get(`/poetries?word=test`)
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(1)
-                    done()
-                })
-        })
-        it('根据诗歌作者匹配,返回诗歌列表', done => {
-            request(server)
-                .get(`/poetries?word=author`)
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(1)
+                    expect(res.body.data).to.exist
                     done()
                 })
         })
