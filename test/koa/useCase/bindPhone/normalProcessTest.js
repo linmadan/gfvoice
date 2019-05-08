@@ -57,23 +57,5 @@ describe('绑定手机用例测试', () => {
                     done()
                 })
         })
-        it('手机号码绑定后，其他用户不能再绑定相同的手机号码', done => {
-            request(server)
-                .post("/users/2/bind-phone")
-                .send({
-                    bindPhone:"123456789101",
-                })
-                .set('Accept', 'application/json')
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(1103)
-                    done()
-                })
-        })
     })
 })

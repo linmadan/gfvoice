@@ -6,10 +6,12 @@ const {
     createDBConnection
 } = require('../../../../lib/infrastructure')
 
-describe('诗歌类型管理正常流程，用例测试', () => {
+describe('用户pick诗歌演唱声音用例测试', () => {
     let server
     let dBConnection
+    let poetryID
     let poetryTypeID
+    let poetryVoiceID
     before(done => {
         server = http.createServer(app.callback()).listen(3000, (err) => {
             if (err) {
@@ -37,7 +39,7 @@ describe('诗歌类型管理正常流程，用例测试', () => {
             }
         })
     })
-    describe('创建新的诗歌类型', () => {
+    describe('用户pick诗歌演唱声音', () => {
         it('创建一个新的诗歌类型', done => {
             request(server)
                 .post("/admin/poetry-types")
@@ -54,17 +56,21 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                         return
                     }
                     expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.be.exist
                     poetryTypeID = res.body.data.id
                     done()
                 })
         })
-    })
-    describe('获取指定ID的诗歌类型', () => {
-        it('返回指定ID的诗歌类型', done => {
+        it('创建一个新的Poetry类型', done => {
             request(server)
-                .get(`/admin/poetry-types/${poetryTypeID}`)
+                .post("/admin/poetries")
+                .send({
+                    name: "test-name-1",
+                    word: "test-word-1",
+                    author: "test-author-1",
+                    accompany: "test-accompany-1",
+                    poetryTypeID: poetryTypeID,
+                })
+                .set('Accept', 'application/json')
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -73,20 +79,37 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                         return
                     }
                     expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.be.exist
-                    expect(res.body.data.id).to.be.equal(poetryTypeID)
+                    poetryID = res.body.data.id
                     done()
                 })
         })
-    })
-    describe('更新诗歌类型', () => {
-        it('更新指定ID的诗歌类型', done => {
+        it('提交演唱声音', done => {
             request(server)
-                .put(`/admin/poetry-types/${poetryTypeID}`)
+                .post("/poetry-voices/submit")
                 .send({
-                    name: "test-name-update",
-                    pic: "test-pic-update"
+                    av: "test-av",
+                    bgState: 1,
+                    userID: 1,
+                    poetryID: poetryID,
+                })
+                .set('Accept', 'application/json')
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                        return
+                    }
+                    expect(res.body.code).to.equal(0)
+                    poetryVoiceID = res.body.data.id
+                    done()
+                })
+        })
+        it('用户pick诗歌演唱声音成功', done => {
+            request(server)
+                .post(`/poetry-voices/${poetryVoiceID}/pick`)
+                .send({
+                    userID: 1
                 })
                 .set('Accept', 'application/json')
                 .expect(200)
@@ -98,52 +121,42 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.id).to.be.equal(poetryTypeID)
-                    expect(res.body.data.name).to.be.equal("test-name-update")
-                    expect(res.body.data.pic).to.be.equal("test-pic-update")
-                    done()
-                })
-        })
-        it('返回更新后的诗歌类型', done => {
-            request(server)
-                .get(`/admin/poetry-types/${poetryTypeID}`)
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.be.exist
-                    expect(res.body.data.id).to.be.equal(poetryTypeID)
-                    expect(res.body.data.name).to.be.equal("test-name-update")
-                    expect(res.body.data.pic).to.be.equal("test-pic-update")
-                    done()
-                })
-        })
-    })
-    describe('获取所有诗歌类型', () => {
-        it('返回所有的诗歌类型', done => {
-            request(server)
-                .get("/admin/poetry-types")
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.exist
-                    expect(res.body.data.count).to.equal(1)
                     done()
                 })
         })
-    })
-    describe('删除诗歌类型', () => {
+        it('重复pick诗歌演唱声音返回失败对象', done => {
+            request(server)
+                .post(`/poetry-voices/${poetryVoiceID}/pick`)
+                .send({
+                    userID: 1
+                })
+                .set('Accept', 'application/json')
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                        return
+                    }
+                    expect(res.body.code).to.equal(1106)
+                    done()
+                })
+        })
+        it('删除指定ID的Poetry类型', done => {
+            request(server)
+                .delete(`/admin/poetries/${poetryID}`)
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                        return
+                    }
+                    expect(res.body.code).to.equal(0)
+                    done()
+                })
+        })
         it('删除指定ID的诗歌类型', done => {
             request(server)
                 .delete(`/admin/poetry-types/${poetryTypeID}`)
@@ -155,24 +168,6 @@ describe('诗歌类型管理正常流程，用例测试', () => {
                         return
                     }
                     expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.be.exist
-                    done()
-                })
-        })
-        it('返回所有的诗歌类型', done => {
-            request(server)
-                .get("/admin/poetry-types")
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.be.equal(0)
                     done()
                 })
         })

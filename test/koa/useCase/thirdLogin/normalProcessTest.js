@@ -6,14 +6,14 @@ const {
     createDBConnection
 } = require('../../../../lib/infrastructure')
 
-describe('用户注册用例测试', () => {
+describe('第三方登陆或者注册用例测试', () => {
     let server
     let dBConnection
     before(done => {
         server = http.createServer(app.callback()).listen(3000, (err) => {
             if (err) {
                 done(err)
-            } else {
+            }else {
                 dBConnection = createDBConnection()
                 dBConnection.connect().then(() => {
                     done()
@@ -27,7 +27,7 @@ describe('用户注册用例测试', () => {
         server.close(err => {
             if (err) {
                 done(err)
-            } else {
+            }else {
                 dBConnection.disconnect().then(() => {
                     done()
                 }).catch(err => {
@@ -36,14 +36,14 @@ describe('用户注册用例测试', () => {
             }
         })
     })
-    describe('用户注册', () => {
-        it('手机号注册，成功返回用户对象', done => {
+    describe('第三方登陆或者注册', () => {
+        it('第三方平台登陆，成功返回用户对象', done => {
             request(server)
-                .post("/users/register")
+                .post("/users/third-login")
                 .send({
                     name: "test-name",
-                    phone: "123456789101",
-                    registerType: 1,
+                    platID: "test-plat-id",
+                    registerType: 3,
                     gender: "f",
                     location: "测试地址",
                     birthday: "1984-01-01",
@@ -59,8 +59,8 @@ describe('用户注册用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.be.exist
-                    expect(res.body.data.name).to.be.equal("test-name")
+                    expect(res.body.data.user.platID).to.be.equal("test-plat-id")
+                    expect(res.body.data.focusUserIDs).to.exist
                     done()
                 })
         })
