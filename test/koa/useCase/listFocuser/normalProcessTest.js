@@ -97,7 +97,7 @@ describe('获取关注对象列表用例测试', () => {
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.exist
                     expect(res.body.data.count).to.equal(1)
-                    expect(res.body.data.focusers[0].id).to.equal(1)
+                    expect(res.body.data.list[0].id).to.equal(1)
                     done()
                 })
         })
