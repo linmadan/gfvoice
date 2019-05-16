@@ -101,7 +101,6 @@ describe('演唱声音提交用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.exist
                     done()
                 })
         })

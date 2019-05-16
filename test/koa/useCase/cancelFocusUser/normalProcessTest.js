@@ -37,7 +37,7 @@ describe('取消关注用户用例测试', () => {
             }
         })
     })
-    describe('', () => {
+    describe('取消关注用户', () => {
         it('手机号注册一个用户', done => {
             request(server)
                 .post("/users/register")
@@ -116,7 +116,7 @@ describe('取消关注用户用例测试', () => {
                         done(err)
                         return
                     }
-                    expect(res.body.code).to.equal(1105)
+                    expect(res.body.code).to.equal(105)
                     done()
                 })
         })

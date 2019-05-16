@@ -87,12 +87,6 @@ describe('更新用户信息用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data).to.exist
-                    expect(res.body.data.id).to.equal(userID)
-                    expect(res.body.data.name).to.equal("update-name")
-                    expect(res.body.data.info.gender).to.equal("m")
-                    expect(res.body.data.info.location).to.equal("更新地址")
-                    expect(res.body.data.info.pics.length).to.equal(3)
                     done()
                 })
         })

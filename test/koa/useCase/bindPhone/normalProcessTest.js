@@ -53,7 +53,6 @@ describe('绑定手机用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.bindPhone).to.equal("123456789101")
                     done()
                 })
         })

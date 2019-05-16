@@ -97,7 +97,7 @@ describe('关注用户用例测试', () => {
                         done(err)
                         return
                     }
-                    expect(res.body.code).to.equal(1104)
+                    expect(res.body.code).to.equal(104)
                     done()
                 })
         })

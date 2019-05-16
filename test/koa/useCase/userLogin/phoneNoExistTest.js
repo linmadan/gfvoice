@@ -51,7 +51,7 @@ describe('用户登入用例测试', () => {
                         done(err)
                         return
                     }
-                    expect(res.body.code).to.equal(1101)
+                    expect(res.body.code).to.equal(101)
                     done()
                 })
         })

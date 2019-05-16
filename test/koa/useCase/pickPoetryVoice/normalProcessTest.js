@@ -139,7 +139,7 @@ describe('用户pick诗歌演唱声音用例测试', () => {
                         done(err)
                         return
                     }
-                    expect(res.body.code).to.equal(1106)
+                    expect(res.body.code).to.equal(106)
                     done()
                 })
         })
