@@ -104,33 +104,5 @@ describe('演唱声音提交用例测试', () => {
                     done()
                 })
         })
-        it('删除指定ID的Poetry类型', done => {
-            request(server)
-                .delete(`/admin/poetries/${poetryID}`)
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    done()
-                })
-        })
-        it('删除指定ID的诗歌类型', done => {
-            request(server)
-                .delete(`/admin/poetry-types/${poetryTypeID}`)
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .end((err, res) => {
-                    if (err) {
-                        done(err)
-                        return
-                    }
-                    expect(res.body.code).to.equal(0)
-                    done()
-                })
-        })
     })
 })

@@ -126,7 +126,6 @@ describe('获取诗歌列表用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(1)
                     done()
                 })
         })
@@ -142,7 +141,6 @@ describe('获取诗歌列表用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(1)
                     done()
                 })
         })

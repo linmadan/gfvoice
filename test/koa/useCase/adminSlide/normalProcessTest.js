@@ -136,7 +136,6 @@ describe('Slide类型管理正常流程，用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.be.exist
-                    expect(res.body.data.count).to.be.equal(1)
                     done()
                 })
         })
@@ -170,7 +169,6 @@ describe('Slide类型管理正常流程，用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.be.equal(0)
                     done()
                 })
         })

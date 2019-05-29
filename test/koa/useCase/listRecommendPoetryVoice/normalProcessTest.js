@@ -6,7 +6,7 @@ const {
     createDBConnection
 } = require('../../../../lib/infrastructure')
 
-describe('用户pick诗歌演唱声音用例测试', () => {
+describe('推荐诗歌列表数据用例测试', () => {
     let server
     let dBConnection
     before(done => {
@@ -36,14 +36,10 @@ describe('用户pick诗歌演唱声音用例测试', () => {
             }
         })
     })
-    describe('用户pick诗歌演唱声音', () => {
-        it('用户pick诗歌演唱声音成功', done => {
+    describe('推荐诗歌列表数据', () => {
+        it('返回诗歌列表数据1', done => {
             request(server)
-                .post(`/poetry-voices/1/pick`)
-                .send({
-                    userID: 1
-                })
-                .set('Accept', 'application/json')
+                .get("/poetry-voices/recommend?page=0&limitHot=7&limit=10")
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
@@ -53,6 +49,23 @@ describe('用户pick诗歌演唱声音用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
+                    expect(res.body.data).to.exist
+                    done()
+                })
+        })
+        it('返回诗歌列表数据2', done => {
+            request(server)
+                .get("/poetry-voices/recommend?page=1&limitHot=7&limit=10")
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                        return
+                    }
+                    expect(res.body.code).to.equal(0)
+                    expect(res.body.msg).to.equal("ok")
+                    expect(res.body.data).to.exist
                     done()
                 })
         })

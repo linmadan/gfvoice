@@ -138,7 +138,6 @@ describe('AppUpdateInfo类型管理正常流程，用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.exist
-                    expect(res.body.data.count).to.equal(1)
                     done()
                 })
         })
@@ -172,7 +171,6 @@ describe('AppUpdateInfo类型管理正常流程，用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(0)
                     done()
                 })
         })
