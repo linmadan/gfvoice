@@ -37,6 +37,22 @@ describe('获取演唱声音列表用例测试', () => {
         })
     })
     describe('获取演唱声音列表', () => {
+        it('返回演唱声音列表', done => {
+            request(server)
+                .get("/poetry-voices")
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                        return
+                    }
+                    expect(res.body.code).to.equal(0)
+                    expect(res.body.msg).to.equal("ok")
+                    expect(res.body.data).to.exist
+                    done()
+                })
+        })
         it('根据诗歌id，返回演唱声音列表', done => {
             request(server)
                 .get("/poetry-voices?poetryID=1000")
