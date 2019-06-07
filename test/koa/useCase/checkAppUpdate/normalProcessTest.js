@@ -41,8 +41,8 @@ describe('检查更新用例测试', () => {
             request(server)
                 .post("/system/check-app-update")
                 .send({
-                    vcode: 1,
-                    channel: "test-channel"
+                    vcode: 0,
+                    channel: "hy"
                 })
                 .set('Accept', 'application/json')
                 .expect(200)
@@ -55,6 +55,25 @@ describe('检查更新用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.exist
+                    done()
+                })
+        })
+        it('检查更新,已经是最新版本 ', done => {
+            request(server)
+                .post("/system/check-app-update")
+                .send({
+                    vcode: 1,
+                    channel: "hy"
+                })
+                .set('Accept', 'application/json')
+                .expect(200)
+                .expect('Content-Type', /json/)
+                .end((err, res) => {
+                    if (err) {
+                        done(err)
+                        return
+                    }
+                    expect(res.body.code).to.equal(201)
                     done()
                 })
         })
