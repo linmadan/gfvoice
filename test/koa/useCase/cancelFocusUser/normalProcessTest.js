@@ -60,13 +60,13 @@ describe('取消关注用户用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    focuserID = res.body.data.id
+                    focuserID = res.body.data.user.id
                     done()
                 })
         })
         it('成功关注', done => {
             request(server)
-                .post(`/users/1/focus`)
+                .post(`/users/3196772435201024/focus`)
                 .send({
                     focuserID: focuserID
                 })
@@ -85,7 +85,7 @@ describe('取消关注用户用例测试', () => {
         })
         it('取消关注用户', done => {
             request(server)
-                .post("/users/1/cancel-focus")
+                .post("/users/3196772435201024/cancel-focus")
                 .send({
                     focuserID: focuserID
                 })

@@ -42,7 +42,7 @@ describe('检查更新用例测试', () => {
                 .post("/system/check-app-update")
                 .send({
                     vcode: 0,
-                    channel: "hy"
+                    channel: "hy-test"
                 })
                 .set('Accept', 'application/json')
                 .expect(200)

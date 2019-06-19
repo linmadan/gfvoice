@@ -39,10 +39,10 @@ describe('对演唱声音进行评论用例测试', () => {
     describe('对演唱声音进行评论', () => {
         it('评论成功', done => {
             request(server)
-                .post(`/poetry-voices/1/comment`)
+                .post(`/poetry-voices/3196773691245568/comment`)
                 .send({
                     content:"评论测试",
-                    userID: 1
+                    userID: 3196772435201024
                 })
                 .set('Accept', 'application/json')
                 .expect(200)

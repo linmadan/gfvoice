@@ -60,13 +60,13 @@ describe('关注用户用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    focuserID = res.body.data.id
+                    focuserID = res.body.data.user.id
                     done()
                 })
         })
         it('成功关注，返回关注数据', done => {
             request(server)
-                .post(`/users/1/focus`)
+                .post(`/users/3196772435201024/focus`)
                 .send({
                     focuserID: focuserID
                 })
@@ -85,7 +85,7 @@ describe('关注用户用例测试', () => {
         })
         it('关注已经关注过的用户时，关注失败', done => {
             request(server)
-                .post(`/users/1/focus`)
+                .post(`/users/3196772435201024/focus`)
                 .send({
                     focuserID: focuserID
                 })

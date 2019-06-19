@@ -39,9 +39,9 @@ describe('用户pick诗歌演唱声音用例测试', () => {
     describe('用户pick诗歌演唱声音', () => {
         it('用户pick诗歌演唱声音成功', done => {
             request(server)
-                .post(`/poetry-voices/1/pick`)
+                .post(`/poetry-voices/3196773691245568/pick`)
                 .send({
-                    userID: 1
+                    userID: 3196772435201024
                 })
                 .set('Accept', 'application/json')
                 .expect(200)

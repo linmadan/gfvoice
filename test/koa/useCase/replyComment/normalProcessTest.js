@@ -39,10 +39,10 @@ describe('对评论进行回复用例测试', () => {
     describe('对评论进行回复', () => {
         it('回复成功', done => {
             request(server)
-                .post("/poetry-voices/1/comments/1/reply")
+                .post("/poetry-voices/3196773691245568/comments/3196776257010688/reply")
                 .send({
                     content: "回复测试",
-                    userID: 2
+                    userID: 3196772435201024
                 })
                 .set('Accept', 'application/json')
                 .expect(200)

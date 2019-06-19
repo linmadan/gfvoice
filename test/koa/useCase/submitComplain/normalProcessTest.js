@@ -60,13 +60,13 @@ describe('举报用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    userID = res.body.data.id
+                    userID = res.body.data.user.id
                     done()
                 })
         })
         it('举报用户成功', done => {
             request(server)
-                .post(`/users/1/complain`)
+                .post(`/users/3196772435201024/complain`)
                 .send({
                     reason:"低俗色情",
                     fromUserID: userID
@@ -86,7 +86,7 @@ describe('举报用例测试', () => {
         })
         it('举报已经举报过的用户时，举报失败', done => {
             request(server)
-                .post(`/users/1/complain`)
+                .post(`/users/3196772435201024/complain`)
                 .send({
                     reason:"低俗色情",
                     fromUserID: userID
@@ -105,7 +105,7 @@ describe('举报用例测试', () => {
         })
         it('举报用户演唱的诗歌声音成功', done => {
             request(server)
-                .post(`/poetry-voices/1/complain`)
+                .post(`/poetry-voices/3196773691245568/complain`)
                 .send({
                     reason:"攻击引战",
                     fromUserID: userID
@@ -125,7 +125,7 @@ describe('举报用例测试', () => {
         })
         it('举报已经举报过的用户演唱的诗歌声音时，举报失败', done => {
             request(server)
-                .post(`/users/1/complain`)
+                .post(`/users/3196772435201024/complain`)
                 .send({
                     reason:"攻击引战",
                     fromUserID: userID

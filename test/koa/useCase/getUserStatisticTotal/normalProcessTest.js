@@ -39,7 +39,7 @@ describe('获取用户数据统计用例测试', () => {
     describe('获取用户数据统计', () => {
         it('返回用户数据统计', done => {
             request(server)
-                .get("/users/1/statistic-total")
+                .get("/users/3196772435201024/statistic-total")
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {

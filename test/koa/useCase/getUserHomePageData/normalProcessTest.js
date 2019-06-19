@@ -39,7 +39,7 @@ describe('获取用户个人主页信息用例测试', () => {
     describe('获取用户个人主页信息', () => {
         it('返回用户个人主页信息', done => {
             request(server)
-                .get("/users/1/home-page-data")
+                .get("/users/3196772435201024/home-page-data")
                 .expect(200)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {

@@ -41,7 +41,7 @@ describe('用户反馈用例测试', () => {
             request(server)
                 .post("/system/feedback")
                 .send({
-                    userID: 1,
+                    userID: 3196772435201024,
                     content: "反馈文本信息"
                 })
                 .set('Accept', 'application/json')

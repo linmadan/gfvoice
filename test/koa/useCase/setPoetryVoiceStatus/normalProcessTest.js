@@ -39,7 +39,7 @@ describe('setPoetryVoiceStatus用例测试', () => {
     describe('设置演唱声音状态', () => {
         it('返回设置结果', done => {
             request(server)
-                .post("/admin/poetry-voices/28/set-status")
+                .post("/admin/poetry-voices/3196773691245568/set-status")
                 .send({
                     status: 1
                 })

@@ -42,6 +42,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "biguint-format": "^1.0.1",
     "joi": "^14.3.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
@@ -51,6 +52,7 @@
     "moment": "^2.24.0",
     "mysql": "^2.17.1",
     "reflect-metadata": "^0.1.13",
+    "snowflake-nodejs": "^1.0.0",
     "typeorm": "^0.2.16"
   }
 }

@@ -88,7 +88,7 @@ describe('演唱声音提交用例测试', () => {
                 .send({
                     av: "test-av",
                     bgState: 1,
-                    userID: 1,
+                    userID: 3196772435201024,
                     poetryID: poetryID,
                 })
                 .set('Accept', 'application/json')

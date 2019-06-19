@@ -60,7 +60,7 @@ describe('用户注册用例测试', () => {
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
                     expect(res.body.data).to.be.exist
-                    expect(res.body.data.name).to.be.equal("test-name")
+                    expect(res.body.data.user.name).to.be.equal("test-name")
                     done()
                 })
         })

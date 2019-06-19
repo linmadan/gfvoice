@@ -60,13 +60,13 @@ describe('获取粉丝列表用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    focuserID = res.body.data.id
+                    focuserID = res.body.data.user.id
                     done()
                 })
         })
         it('关注新注册用户', done => {
             request(server)
-                .post(`/users/1/focus`)
+                .post(`/users/3196772435201024/focus`)
                 .send({
                     focuserID: focuserID
                 })
@@ -95,8 +95,7 @@ describe('获取粉丝列表用例测试', () => {
                     }
                     expect(res.body.code).to.equal(0)
                     expect(res.body.msg).to.equal("ok")
-                    expect(res.body.data.count).to.equal(1)
-                    expect(res.body.data.list[0].id).to.equal(1)
+                    expect(res.body.data).be.exist
                     done()
                 })
         })

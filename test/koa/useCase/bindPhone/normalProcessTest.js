@@ -39,7 +39,7 @@ describe('绑定手机用例测试', () => {
     describe('绑定手机', () => {
         it('绑定手机成功，返回用户对象', done => {
             request(server)
-                .post("/users/1/bind-phone")
+                .post("/users/3196772435201024/bind-phone")
                 .send({
                     bindPhone:"123456789101",
                 })
