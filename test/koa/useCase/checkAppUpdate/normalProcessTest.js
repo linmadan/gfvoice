@@ -41,8 +41,8 @@ describe('检查更新用例测试', () => {
             request(server)
                 .post("/system/check-app-update")
                 .send({
-                    vcode: 0,
-                    channel: "hy-test"
+                    vcode: 1,
+                    channel: "hyTest"
                 })
                 .set('Accept', 'application/json')
                 .expect(200)
@@ -62,8 +62,8 @@ describe('检查更新用例测试', () => {
             request(server)
                 .post("/system/check-app-update")
                 .send({
-                    vcode: 1,
-                    channel: "hy"
+                    vcode: 2,
+                    channel: "hyTest"
                 })
                 .set('Accept', 'application/json')
                 .expect(200)
